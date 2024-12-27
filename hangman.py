@@ -1,4 +1,7 @@
+# stage 1
+
 import random
+
 
 def start_game():
     words = ['python', 'java', 'javascript', 'php']
