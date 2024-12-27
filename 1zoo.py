@@ -138,10 +138,10 @@ while True:
 
     if user_input.lower() == "exit":
         print("See you later!")
-        break  # Выход из цикла при вводе "exit"
+        break
 
     try:
-        index = int(user_input) - 1  # Индексы в списке начинаются с 0, поэтому вычитаем 1
+        index = int(user_input) - 1
         if 0 <= index < len(animals):
             print(animals[index])
             print("It looks fine!")
