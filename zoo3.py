@@ -130,6 +130,23 @@ l I !
 It looks fine!
 """
 
+# 3 stage
+animals = [camel, lion, deer, goose, bat, rabbit]
 
+while True:
+    user_input = input("Please enter the number of the habitat you would like to view: > ")
 
+    if user_input.lower() == "exit":
+        print("See you later!")
+        break  # Выход из цикла при вводе "exit"
 
+    try:
+        index = int(user_input) - 1  # Индексы в списке начинаются с 0, поэтому вычитаем 1
+        if 0 <= index < len(animals):
+            print(animals[index])
+            print("It looks fine!")
+            print("---")
+        else:
+            print("Invalid number, please try again.")
+    except ValueError:
+        print("Please enter a valid number.")
