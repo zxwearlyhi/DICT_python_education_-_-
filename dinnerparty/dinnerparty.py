@@ -1,3 +1,4 @@
+import random
 # stage 1
 number_of_friends = int(input("Enter the number of friends joining (including you):\n"))
 
