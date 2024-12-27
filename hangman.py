@@ -45,3 +45,28 @@ if __name__ == "__main__":
 
         if __name__ == "__main__":
             main()
+
+            import random
+
+
+            # 4 stage
+
+            def main():
+                print("HANGMAN")
+
+                words = ['python', 'java', 'javascript', 'php']
+                word = random.choice(words)  # Случайный выбор слова
+
+                # Показываем первые 3 буквы и скрываем остальные
+                hint = word[:3] + '-' * (len(word) - 3)
+                print(f"Guess the word {hint}: > ")
+
+                guess = input("> ")
+                if guess.lower() == word:
+                    print("You survived!")
+                else:
+                    print("You lost!")
+
+
+            if __name__ == "__main__":
+                main()
