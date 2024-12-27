@@ -10,12 +10,6 @@ else:
         name = input("> ")
         friends[name] = 0
 
-    # stage 2
+# stage 2
     total_amount = float(input("Enter the total amount:\n"))  # Загальна сума
     split_amount = round(total_amount / number_of_friends, 2)  # Сума для кожного друга
-
-    #stage 3
-    for name in friends:
-        friends[name] = split_amount
-
-    print(friends)
