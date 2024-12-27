@@ -1,72 +1,55 @@
-# 1-st stage
+import random
+
+def start_game():
+    words = ['python', 'java', 'javascript', 'php']
+    word = random.choice(words)
+    hidden_word = ['-'] * len(word)
+    attempts = 8
+    guessed_letters = set()
+
+    print("\nStarting the game!")
+    while attempts > 0 and '-' in hidden_word:
+        print(f"Word: {''.join(hidden_word)} | Attempts left: {attempts}")
+        guess = input("Guess a letter: ").lower()
+
+        # Проверка на валидный ввод
+        if len(guess) != 1 or not guess.isalpha():
+            print("Invalid input. Please enter a single letter.")
+            continue
+
+        if guess in guessed_letters:
+            print("You've already guessed that letter.")
+            continue
+
+        guessed_letters.add(guess)
+
+        if guess in word:
+            for i in range(len(word)):
+                if word[i] == guess:
+                    hidden_word[i] = guess
+            print("Good guess!")
+        else:
+            attempts -= 1
+            print(f"Wrong guess! {attempts} attempts remaining.")
+
+    # Проверка на победу или поражение
+    if '-' not in hidden_word:
+        print(f"Congratulations! You've guessed the word: {word}")
+    else:
+        print(f"You lost! The word was: {word}")
 
 def main():
-    print("HANGMAN")
-    print("The game will be available soon.")
+    while True:
+        print("\nHANGMAN Game")
+        choice = input('Type "play" to start or "exit" to quit: ').lower()
+
+        if choice == 'play':
+            start_game()
+        elif choice == 'exit':
+            print("Thanks for playing!")
+            break
+        else:
+            print("Invalid choice. Please type 'play' or 'exit'.")
 
 if __name__ == "__main__":
     main()
-
-
-    # 2-nd stage
-
-    def main():
-        print("HANGMAN")
-
-        word = "python"  # Задано слово
-        guess = input("Guess the word: > ")  # Запросить ввод от пользователя
-
-        if guess.lower() == word:
-            print("You survived!")  # Пользователь угадал слово
-        else:
-            print("You lost!")  # Пользователь не угадал слово
-
-
-    if __name__ == "__main__":
-        main()
-
-        import random
-
-
-        # 3-rd stage
-
-        def main():
-            print("HANGMAN")
-
-            words = ['python', 'java', 'javascript', 'php']
-            word = random.choice(words)
-            guess = input("Guess the word: > ")
-
-            if guess.lower() == word:
-                print("You survived!")
-            else:
-                print("You lost!")
-
-
-        if __name__ == "__main__":
-            main()
-
-            import random
-
-
-            # 4 stage
-
-            def main():
-                print("HANGMAN")
-
-                words = ['python', 'java', 'javascript', 'php']
-                word = random.choice(words)  # Случайный выбор слова
-
-                # Показываем первые 3 буквы и скрываем остальные
-                hint = word[:3] + '-' * (len(word) - 3)
-                print(f"Guess the word {hint}: > ")
-
-                guess = input("> ")
-                if guess.lower() == word:
-                    print("You survived!")
-                else:
-                    print("You lost!")
-
-
-            if __name__ == "__main__":
-                main()
