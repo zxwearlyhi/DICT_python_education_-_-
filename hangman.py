@@ -24,3 +24,24 @@ if __name__ == "__main__":
 
     if __name__ == "__main__":
         main()
+
+        import random
+
+
+        # 3-rd stage
+
+        def main():
+            print("HANGMAN")
+
+            words = ['python', 'java', 'javascript', 'php']
+            word = random.choice(words)
+            guess = input("Guess the word: > ")
+
+            if guess.lower() == word:
+                print("You survived!")
+            else:
+                print("You lost!")
+
+
+        if __name__ == "__main__":
+            main()
