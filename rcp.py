@@ -1,45 +1,87 @@
 import random
 
-def get_computer_choice(options):
-    return random.choice(options)
+def get_user_name():
+    name = input("Enter your name: > ")
+    print(f"Hello, {name}")
+    return name
 
-def check_winner(user_choice, computer_choice, options):
+def load_rating(name, filename="rating.txt"):
+    rating = 0
+    try:
+        with open(filename, "r") as f:
+            for line in f:
+                user, score = line.strip().split()
+                if user == name:
+                    rating = int(score)
+                    break
+    except FileNotFoundError:
+        pass
+    return rating
+
+def save_rating(name, score, filename="rating.txt"):
+    try:
+        with open(filename, "r") as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        lines = []
+    found = False
+    with open(filename, "w") as f:
+        for line in lines:
+            user, old_score = line.strip().split()
+            if user == name:
+                f.write(f"{name} {score}\n")
+                found = True
+            else:
+                f.write(line)
+        if not found:
+            f.write(f"{name} {score}\n")
+
+def get_options():
+    options = input()
+    if options.strip() == "":
+        return ["rock", "paper", "scissors"]
+    else:
+        return options.strip().split(",")
+
+def compute_win_condition(options, user_choice, computer_choice):
+    num = len(options)
+    user_idx = options.index(user_choice)
+    win_count = (num - 1) // 2
+    losers = [options[(user_idx + i) % num] for i in range(1, win_count + 1)]
     if user_choice == computer_choice:
-        return 'draw'
-    # Визначаємо, який знак перемагає який
-    if (user_choice == 'rock' and computer_choice == 'scissors') or \
-       (user_choice == 'scissors' and computer_choice == 'paper') or \
-       (user_choice == 'paper' and computer_choice == 'rock'):
-        return 'win'
-    return 'lose'
+        return "draw"
+    elif computer_choice in losers:
+        return "lose"
+    else:
+        return "win"
 
 def main():
-    options = ['rock', 'paper', 'scissors']
-    scores = {}
-    name = input('Enter your name: ')
-    print(f'Hello, {name}')
-    scores[name] = 0
-
+    name = get_user_name()
+    score = load_rating(name)
+    print("Enter game options separated by comma (leave empty for classic rock-paper-scissors):")
+    options = get_options()
+    print("Okay, let's start")
     while True:
-        user_input = input()
-        if user_input == '!exit':
-            print('Bye!')
+        user_input = input("> ")
+        if user_input == "!exit":
+            print("Bye!")
+            save_rating(name, score)
             break
-        elif user_input == '!rating':
-            print(f'Your rating: {scores[name]}')
+        elif user_input == "!rating":
+            print(f"Your rating: {score}")
         elif user_input not in options:
-            print('Invalid input')
+            print("Invalid input")
         else:
-            computer_choice = get_computer_choice(options)
-            result = check_winner(user_input, computer_choice, options)
-            if result == 'draw':
-                print(f'There is a draw ({user_input})')
-                scores[name] += 50
-            elif result == 'win':
-                print(f'Well done. The computer chose {computer_choice} and failed')
-                scores[name] += 100
+            computer_choice = random.choice(options)
+            result = compute_win_condition(options, user_input, computer_choice)
+            if result == "draw":
+                print(f"There is a draw ({computer_choice})")
+                score += 50
+            elif result == "win":
+                print(f"Well done. The computer chose {computer_choice} and failed")
+                score += 100
             else:
-                print(f'Sorry, but the computer chose {computer_choice}')
+                print(f"Sorry, but the computer chose {computer_choice}")
 
 if __name__ == '__main__':
     main()
